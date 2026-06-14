@@ -1,5 +1,5 @@
 {
-  "name": "Retail KPI Dashboard",
+  "name": "Store Frontier",
   "description": "Retail store revenue and inventory KPI dashboard to track daily sales, profit margins, stock levels, fast-moving items, and low-performing products.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

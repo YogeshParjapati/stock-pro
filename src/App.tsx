@@ -40,12 +40,27 @@ export default function App() {
   // --- Persistent Storage State ---
   const [products, setProducts] = useState<Product[]>(() => {
     const saved = localStorage.getItem("retail_dashboard_products");
-    return saved ? JSON.parse(saved) : INITIAL_PRODUCTS;
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed.some((p: any) => p.name === "Classic Denim Jacket" || p.sku === "APP-DJ-01")) {
+        localStorage.removeItem("retail_dashboard_ai_report");
+        return INITIAL_PRODUCTS;
+      }
+      return parsed;
+    }
+    return INITIAL_PRODUCTS;
   });
 
   const [transactions, setTransactions] = useState<SaleTransaction[]>(() => {
     const saved = localStorage.getItem("retail_dashboard_transactions");
-    return saved ? JSON.parse(saved) : INITIAL_TRANSACTIONS;
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed.some((t: any) => t.productName === "Fresh Haas Avocado Pre-pack" || t.productId === "p17" && t.productName !== "Organic A2 Cow Desi Ghee 1L")) {
+        return INITIAL_TRANSACTIONS;
+      }
+      return parsed;
+    }
+    return INITIAL_TRANSACTIONS;
   });
 
   const [selectedDept, setSelectedDept] = useState<Department>(Department.ALL);
@@ -391,7 +406,7 @@ export default function App() {
               <Package className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-xl font-black text-slate-950 tracking-tight">MerchMetrics</h1>
+              <h1 className="text-xl font-black text-slate-950 tracking-tight">Store Frontier</h1>
               <p className="text-xs text-indigo-600/80 font-bold uppercase tracking-widest flex items-center gap-1">
                 <span>Retail Inventory & Revenue KPIs</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -1148,7 +1163,7 @@ export default function App() {
       <footer className="mt-auto bg-slate-900 text-slate-400 py-6 border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
           <div>
-            <span className="font-bold text-slate-100">MerchMetrics KPI Dashboard</span> — Store manager strategy toolkit
+            <span className="font-bold text-slate-100">Store Frontier KPI Dashboard</span> — Store manager strategy toolkit
           </div>
           <div className="flex gap-4">
             <span className="font-mono text-slate-500">v1.1.0 (TypeScript + Express)</span>

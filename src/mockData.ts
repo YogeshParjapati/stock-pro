@@ -11,8 +11,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   // APPAREL & FASHION
   {
     id: "p1",
-    name: "Classic Denim Jacket",
-    sku: "APP-DJ-01",
+    name: "Handwoven Banarasi Silk Saree",
+    sku: "APP-BSS-01",
     category: Department.APPAREL,
     cost: 28.50,
     price: 65.00,
@@ -23,8 +23,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: "p2",
-    name: "Premium Cotton Tee",
-    sku: "APP-CT-02",
+    name: "Premium Khadi Cotton Kurta",
+    sku: "APP-KCK-02",
     category: Department.APPAREL,
     cost: 6.50,
     price: 22.00,
@@ -35,8 +35,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: "p3",
-    name: "Slim Fit Stretch Chinos",
-    sku: "APP-SC-03",
+    name: "Handcrafted Kolhapuri Chappals",
+    sku: "APP-KLC-03",
     category: Department.APPAREL,
     cost: 18.00,
     price: 48.00,
@@ -47,8 +47,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: "p4",
-    name: "Athletic Running Shoes",
-    sku: "APP-RS-04",
+    name: "Designer Jodhpuri Sherwani Jacket",
+    sku: "APP-JSJ-04",
     category: Department.APPAREL,
     cost: 45.00,
     price: 110.00,
@@ -59,8 +59,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: "p5",
-    name: "Luxury Comfort Socks Pack",
-    sku: "APP-CS-05",
+    name: "Pashmina Woolen Shawl",
+    sku: "APP-PWS-05",
     category: Department.APPAREL,
     cost: 4.20,
     price: 15.00,
@@ -73,8 +73,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   // ELECTRONICS
   {
     id: "p6",
-    name: "AeroSound Earbuds v2",
-    sku: "ELE-EB-06",
+    name: "BoAt Rockerz ANC Earbuds",
+    sku: "ELE-BRE-06",
     category: Department.ELECTRONICS,
     cost: 32.00,
     price: 89.00,
@@ -85,8 +85,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: "p7",
-    name: "TypeSync Mechanical Keyboard",
-    sku: "ELE-MK-07",
+    name: "Portronics Wireless Keyboard Duo",
+    sku: "ELE-PWK-07",
     category: Department.ELECTRONICS,
     cost: 48.00,
     price: 125.00,
@@ -97,8 +97,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: "p8",
-    name: "CrystalView 4K HD Monitor",
-    sku: "ELE-MN-08",
+    name: "CrystalView Smart LED Projector",
+    sku: "ELE-SLP-08",
     category: Department.ELECTRONICS,
     cost: 165.00,
     price: 349.00,
@@ -109,8 +109,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: "p9",
-    name: "ChargeFlow Duo Power Bank",
-    sku: "ELE-PB-09",
+    name: "Syska Fast-Charge 20k Power Bank",
+    sku: "ELE-SPB-09",
     category: Department.ELECTRONICS,
     cost: 11.50,
     price: 29.99,
@@ -121,8 +121,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: "p10",
-    name: "Optima Pro Smart Watch",
-    sku: "ELE-SW-10",
+    name: "Noise ColorFit Metallic Smartwatch",
+    sku: "ELE-NCS-10",
     category: Department.ELECTRONICS,
     cost: 74.00,
     price: 180.00,
@@ -135,8 +135,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   // HOME & LIVING
   {
     id: "p11",
-    name: "ErgoBack Memory Foam Chair",
-    sku: "HOM-EC-11",
+    name: "Hand-embossed Pure Copper Bottle",
+    sku: "HOM-PCB-11",
     category: Department.HOME,
     cost: 95.00,
     price: 240.00,
@@ -147,8 +147,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: "p12",
-    name: "ThermaStay Insulated Flask",
-    sku: "HOM-TF-12",
+    name: "Mysore Sandalwood Dhoop Cones",
+    sku: "HOM-MSD-12",
     category: Department.HOME,
     cost: 8.00,
     price: 24.99,
@@ -159,46 +159,46 @@ export const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: "p13",
-    name: "Scented Woodwick Candle Set",
-    sku: "HOM-WC-13",
+    name: "Jaipuri Hand-Block Bedsheet",
+    sku: "HOM-JBB-13",
     category: Department.HOME,
     cost: 6.20,
     price: 18.00,
     stockAmount: 72,
     stockMinThreshold: 8,
-    salesCount: 3,  // Slow moving
+    salesCount: 3,
     salesRevenue: 54.00
   },
   {
     id: "p14",
-    name: "Glazed Earth Dinnerware Set",
-    sku: "HOM-ED-14",
+    name: "Brass Puja Diya Arch Set",
+    sku: "HOM-BPD-14",
     category: Department.HOME,
     cost: 34.00,
     price: 85.00,
-    stockAmount: 3,  // Low stock
+    stockAmount: 3,
     stockMinThreshold: 5,
-    salesCount: 1,  // Low performing
+    salesCount: 1,
     salesRevenue: 85.00
   },
   {
     id: "p15",
-    name: "Luxury Bamboo Bedsheet Set",
-    sku: "HOM-BB-15",
+    name: "Handwoven Jute Living Room Rug",
+    sku: "HOM-HJR-15",
     category: Department.HOME,
     cost: 29.00,
     price: 79.99,
     stockAmount: 45,
     stockMinThreshold: 5,
-    salesCount: 0,  // Low performing, zero sales tracker
+    salesCount: 0,
     salesRevenue: 0.00
   },
 
   // GROCERIES
   {
     id: "p16",
-    name: "Organic Whole Almond Milk",
-    sku: "GRO-AM-16",
+    name: "Premium Kohinoor Basmati Rice 5kg",
+    sku: "GRO-KBR-16",
     category: Department.GROCERIES,
     cost: 1.80,
     price: 4.89,
@@ -209,20 +209,20 @@ export const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: "p17",
-    name: "Fresh Haas Avocado Pre-pack",
-    sku: "GRO-HA-17",
+    name: "Organic A2 Cow Desi Ghee 1L",
+    sku: "GRO-CDG-17",
     category: Department.GROCERIES,
     cost: 2.20,
     price: 5.99,
-    stockAmount: 18, // Rapidly diminishing relative to high sales count!
+    stockAmount: 18,
     stockMinThreshold: 25,
     salesCount: 94,
     salesRevenue: 563.06
   },
   {
     id: "p18",
-    name: "Artisanal Sesame Sourdough",
-    sku: "GRO-SD-18",
+    name: "Authentic Kashmiri Kesar (Saffron) 1g",
+    sku: "GRO-AKK-18",
     category: Department.GROCERIES,
     cost: 1.50,
     price: 6.50,
@@ -233,8 +233,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: "p19",
-    name: "BrewMaster Cold Brew Jug 1L",
-    sku: "GRO-CB-19",
+    name: "Tata Tea Gold Premium Blend",
+    sku: "GRO-TTG-19",
     category: Department.GROCERIES,
     cost: 3.10,
     price: 11.99,
@@ -245,8 +245,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: "p20",
-    name: "Raw Mountain Organic Honey",
-    sku: "GRO-OH-20",
+    name: "Alphonso Mango Pulp Can",
+    sku: "GRO-AMP-20",
     category: Department.GROCERIES,
     cost: 4.80,
     price: 14.50,
@@ -261,7 +261,7 @@ export const INITIAL_TRANSACTIONS: SaleTransaction[] = [
   {
     id: "t1",
     productId: "p17",
-    productName: "Fresh Haas Avocado Pre-pack",
+    productName: "Organic A2 Cow Desi Ghee 1L",
     category: Department.GROCERIES,
     quantity: 3,
     pricePerUnit: 5.99,
@@ -273,7 +273,7 @@ export const INITIAL_TRANSACTIONS: SaleTransaction[] = [
   {
     id: "t2",
     productId: "p4",
-    productName: "Athletic Running Shoes",
+    productName: "Designer Jodhpuri Sherwani Jacket",
     category: Department.APPAREL,
     quantity: 1,
     pricePerUnit: 110.00,
@@ -285,7 +285,7 @@ export const INITIAL_TRANSACTIONS: SaleTransaction[] = [
   {
     id: "t3",
     productId: "p16",
-    productName: "Organic Whole Almond Milk",
+    productName: "Premium Kohinoor Basmati Rice 5kg",
     category: Department.GROCERIES,
     quantity: 5,
     pricePerUnit: 4.89,
@@ -297,7 +297,7 @@ export const INITIAL_TRANSACTIONS: SaleTransaction[] = [
   {
     id: "t4",
     productId: "p6",
-    productName: "AeroSound Earbuds v2",
+    productName: "BoAt Rockerz ANC Earbuds",
     category: Department.ELECTRONICS,
     quantity: 2,
     pricePerUnit: 89.00,
@@ -309,7 +309,7 @@ export const INITIAL_TRANSACTIONS: SaleTransaction[] = [
   {
     id: "t5",
     productId: "p19",
-    productName: "BrewMaster Cold Brew Jug 1L",
+    productName: "Tata Tea Gold Premium Blend",
     category: Department.GROCERIES,
     quantity: 2,
     pricePerUnit: 11.99,
@@ -321,7 +321,7 @@ export const INITIAL_TRANSACTIONS: SaleTransaction[] = [
   {
     id: "t6",
     productId: "p2",
-    productName: "Premium Cotton Tee",
+    productName: "Premium Khadi Cotton Kurta",
     category: Department.APPAREL,
     quantity: 4,
     pricePerUnit: 22.00,
@@ -333,7 +333,7 @@ export const INITIAL_TRANSACTIONS: SaleTransaction[] = [
   {
     id: "t7",
     productId: "p10",
-    productName: "Optima Pro Smart Watch",
+    productName: "Noise ColorFit Metallic Smartwatch",
     category: Department.ELECTRONICS,
     quantity: 1,
     pricePerUnit: 180.00,
@@ -345,7 +345,7 @@ export const INITIAL_TRANSACTIONS: SaleTransaction[] = [
   {
     id: "t8",
     productId: "p8",
-    productName: "CrystalView 4K HD Monitor",
+    productName: "CrystalView Smart LED Projector",
     category: Department.ELECTRONICS,
     quantity: 1,
     pricePerUnit: 349.00,
@@ -357,7 +357,7 @@ export const INITIAL_TRANSACTIONS: SaleTransaction[] = [
   {
     id: "t9",
     productId: "p12",
-    productName: "ThermaStay Insulated Flask",
+    productName: "Mysore Sandalwood Dhoop Cones",
     category: Department.HOME,
     quantity: 2,
     pricePerUnit: 24.99,
@@ -369,7 +369,7 @@ export const INITIAL_TRANSACTIONS: SaleTransaction[] = [
   {
     id: "t10",
     productId: "p17",
-    productName: "Fresh Haas Avocado Pre-pack",
+    productName: "Organic A2 Cow Desi Ghee 1L",
     category: Department.GROCERIES,
     quantity: 4,
     pricePerUnit: 5.99,
@@ -381,7 +381,7 @@ export const INITIAL_TRANSACTIONS: SaleTransaction[] = [
   {
     id: "t11",
     productId: "p1",
-    productName: "Classic Denim Jacket",
+    productName: "Handwoven Banarasi Silk Saree",
     category: Department.APPAREL,
     quantity: 1,
     pricePerUnit: 65.00,
@@ -393,7 +393,7 @@ export const INITIAL_TRANSACTIONS: SaleTransaction[] = [
   {
     id: "t12",
     productId: "p9",
-    productName: "ChargeFlow Duo Power Bank",
+    productName: "Syska Fast-Charge 20k Power Bank",
     category: Department.ELECTRONICS,
     quantity: 3,
     pricePerUnit: 29.99,
@@ -405,7 +405,7 @@ export const INITIAL_TRANSACTIONS: SaleTransaction[] = [
   {
     id: "t13",
     productId: "p20",
-    productName: "Raw Mountain Organic Honey",
+    productName: "Alphonso Mango Pulp Can",
     category: Department.GROCERIES,
     quantity: 1,
     pricePerUnit: 14.50,
