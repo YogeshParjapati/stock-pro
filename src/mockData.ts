@@ -69,6 +69,66 @@ export const INITIAL_PRODUCTS: Product[] = [
     salesCount: 14,
     salesRevenue: 210.00
   },
+  {
+    id: "p21",
+    name: "Handcrafted Chikankari Lucknowi Kurti",
+    sku: "APP-CLK-21",
+    category: Department.APPAREL,
+    cost: 12.00,
+    price: 34.99,
+    stockAmount: 25,
+    stockMinThreshold: 5,
+    salesCount: 18,
+    salesRevenue: 629.82
+  },
+  {
+    id: "p22",
+    name: "Premium Leather Nehru Jacket",
+    sku: "APP-LNJ-22",
+    category: Department.APPAREL,
+    cost: 38.00,
+    price: 95.00,
+    stockAmount: 12,
+    stockMinThreshold: 4,
+    salesCount: 6,
+    salesRevenue: 570.00
+  },
+  {
+    id: "p23",
+    name: "Pure Pashmina Cashmere Muffler",
+    sku: "APP-PCM-23",
+    category: Department.APPAREL,
+    cost: 14.50,
+    price: 42.00,
+    stockAmount: 1,  // Critical Low Stock!
+    stockMinThreshold: 5,
+    salesCount: 15,
+    salesRevenue: 630.00
+  },
+  {
+    id: "p24",
+    name: "Jaipuri Block-Print Cotton Dupatta",
+    sku: "APP-BCD-24",
+    category: Department.APPAREL,
+    cost: 3.20,
+    price: 12.99,
+    stockAmount: 90,
+    stockMinThreshold: 10,
+    salesCount: 40,
+    salesRevenue: 519.60
+  },
+  {
+    id: "p25",
+    name: "Sanganeri Printed Men's Shirt",
+    sku: "APP-SMS-25",
+    category: Department.APPAREL,
+    cost: 8.50,
+    price: 24.50,
+    stockAmount: 65,
+    stockMinThreshold: 12,
+    salesCount: 28,
+    salesRevenue: 686.00
+  },
 
   // ELECTRONICS
   {
@@ -130,6 +190,66 @@ export const INITIAL_PRODUCTS: Product[] = [
     stockMinThreshold: 4,
     salesCount: 11,
     salesRevenue: 1980.00
+  },
+  {
+    id: "p26",
+    name: "Mivi Octave 16W Bluetooth Speaker",
+    sku: "ELE-MBS-26",
+    category: Department.ELECTRONICS,
+    cost: 14.00,
+    price: 39.99,
+    stockAmount: 48,
+    stockMinThreshold: 8,
+    salesCount: 22,
+    salesRevenue: 879.78
+  },
+  {
+    id: "p27",
+    name: "Ambrane 3-in-1 Braided Charging Cable",
+    sku: "ELE-ACC-27",
+    category: Department.ELECTRONICS,
+    cost: 2.10,
+    price: 8.99,
+    stockAmount: 140,
+    stockMinThreshold: 15,
+    salesCount: 75,
+    salesRevenue: 674.25
+  },
+  {
+    id: "p28",
+    name: "Zebronics Ergonomic Vertical Mouse",
+    sku: "ELE-ZVM-28",
+    category: Department.ELECTRONICS,
+    cost: 9.50,
+    price: 29.00,
+    stockAmount: 0,  // OUT OF STOCK
+    stockMinThreshold: 5,
+    salesCount: 14,
+    salesRevenue: 406.00
+  },
+  {
+    id: "p29",
+    name: "Realme Smart Home Security Camera",
+    sku: "ELE-RSC-29",
+    category: Department.ELECTRONICS,
+    cost: 21.00,
+    price: 54.99,
+    stockAmount: 18,
+    stockMinThreshold: 6,
+    salesCount: 9,
+    salesRevenue: 494.91
+  },
+  {
+    id: "p30",
+    name: "SanDisk Extreme 128GB MicroSD Card",
+    sku: "ELE-SMC-30",
+    category: Department.ELECTRONICS,
+    cost: 6.80,
+    price: 19.99,
+    stockAmount: 112,
+    stockMinThreshold: 10,
+    salesCount: 44,
+    salesRevenue: 879.56
   },
 
   // HOME & LIVING
@@ -193,6 +313,66 @@ export const INITIAL_PRODUCTS: Product[] = [
     salesCount: 0,
     salesRevenue: 0.00
   },
+  {
+    id: "p31",
+    name: "Premium Ceramic Dinnerware Set (12pc)",
+    sku: "HOM-PCD-31",
+    category: Department.HOME,
+    cost: 42.00,
+    price: 119.99,
+    stockAmount: 16,
+    stockMinThreshold: 4,
+    salesCount: 3,
+    salesRevenue: 359.97
+  },
+  {
+    id: "p32",
+    name: "Handmade Terracotta Clay Water Pot",
+    sku: "HOM-TCW-32",
+    category: Department.HOME,
+    cost: 7.00,
+    price: 22.00,
+    stockAmount: 2,  // Low stock!
+    stockMinThreshold: 5,
+    salesCount: 11,
+    salesRevenue: 242.00
+  },
+  {
+    id: "p33",
+    name: "Aromatic Himalayan Pink Salt Lamp",
+    sku: "HOM-HSL-33",
+    category: Department.HOME,
+    cost: 11.00,
+    price: 32.50,
+    stockAmount: 38,
+    stockMinThreshold: 8,
+    salesCount: 14,
+    salesRevenue: 455.00
+  },
+  {
+    id: "p34",
+    name: "Dhokra Antique Brass Figurine Set",
+    sku: "HOM-ABF-34",
+    category: Department.HOME,
+    cost: 55.00,
+    price: 149.99,
+    stockAmount: 5,
+    stockMinThreshold: 2,
+    salesCount: 2,
+    salesRevenue: 299.98
+  },
+  {
+    id: "p35",
+    name: "Organic Bamboo Bath Towel Duo",
+    sku: "HOM-BBT-35",
+    category: Department.HOME,
+    cost: 12.50,
+    price: 35.00,
+    stockAmount: 50,
+    stockMinThreshold: 6,
+    salesCount: 12,
+    salesRevenue: 420.00
+  },
 
   // GROCERIES
   {
@@ -254,6 +434,66 @@ export const INITIAL_PRODUCTS: Product[] = [
     stockMinThreshold: 8,
     salesCount: 14,
     salesRevenue: 203.00
+  },
+  {
+    id: "p36",
+    name: "Pure Wild Forest Honey 500g",
+    sku: "GRO-WFH-36",
+    category: Department.GROCERIES,
+    cost: 4.50,
+    price: 12.99,
+    stockAmount: 84,
+    stockMinThreshold: 12,
+    salesCount: 29,
+    salesRevenue: 376.71
+  },
+  {
+    id: "p37",
+    name: "Nutraj Premium California Almonds 1kg",
+    sku: "GRO-PCA-37",
+    category: Department.GROCERIES,
+    cost: 9.80,
+    price: 24.99,
+    stockAmount: 45,
+    stockMinThreshold: 8,
+    salesCount: 19,
+    salesRevenue: 474.81
+  },
+  {
+    id: "p38",
+    name: "Organic Turmeric Powder (Lakadong) 250g",
+    sku: "GRO-LTP-38",
+    category: Department.GROCERIES,
+    cost: 1.50,
+    price: 4.99,
+    stockAmount: 120,
+    stockMinThreshold: 15,
+    salesCount: 62,
+    salesRevenue: 309.38
+  },
+  {
+    id: "p39",
+    name: "Premium Darjeeling First Flush Tea",
+    sku: "GRO-DFT-39",
+    category: Department.GROCERIES,
+    cost: 12.00,
+    price: 38.00,
+    stockAmount: 3,  // Low stock!
+    stockMinThreshold: 6,
+    salesCount: 14,
+    salesRevenue: 532.00
+  },
+  {
+    id: "p40",
+    name: "Happilo Premium Roasted Cashews 500g",
+    sku: "GRO-PRC-40",
+    category: Department.GROCERIES,
+    cost: 6.20,
+    price: 16.99,
+    stockAmount: 70,
+    stockMinThreshold: 10,
+    salesCount: 25,
+    salesRevenue: 424.75
   }
 ];
 

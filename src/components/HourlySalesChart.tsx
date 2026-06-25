@@ -80,9 +80,9 @@ export default function HourlySalesChart(props: HourlySalesChartProps) {
   const gridLines = [0, 0.25, 0.5, 0.75, 1];
 
   const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat("en-IN", {
       style: "currency",
-      currency: "USD",
+      currency: "INR",
       maximumFractionDigits: 0
     }).format(val);
   };
@@ -101,7 +101,7 @@ export default function HourlySalesChart(props: HourlySalesChartProps) {
           </div>
           <div className="flex items-center gap-2">
             <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
-            <span className="text-slate-600">Profit Margin ($)</span>
+            <span className="text-slate-600">Profit Margin (₹)</span>
           </div>
         </div>
       </div>

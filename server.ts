@@ -49,8 +49,8 @@ Keep all labels friendly, objective, and realistic. Provide actual values based 
     const storeContext = `
 Department Segment analyzed: ${department || "All Store"}
 --- CURRENT KPIS ---
-Total Revenue: $${Number(kpis.revenue).toFixed(2)}
-Total Sales Cost: $${Number(kpis.cost).toFixed(2)}
+Total Revenue: ₹${Number(kpis.revenue).toFixed(2)}
+Total Sales Cost: ₹${Number(kpis.cost).toFixed(2)}
 Overall Profit Margin: ${Number(kpis.margin).toFixed(1)}%
 Average Fill Rate (In Stock %): ${Number(kpis.inStockRate).toFixed(1)}%
 Out of Stock Products: ${kpis.outOfStockCount || 0} items
@@ -60,14 +60,14 @@ ${products
   .filter((p: any) => p.salesCount > 0)
   .sort((a: any, b: any) => b.salesCount - a.salesCount)
   .slice(0, 5)
-  .map((p: any) => `- ${p.name} (${p.category}): Sales count: ${p.salesCount} units, Current stock: ${p.stockAmount} units, Total value sold: $${(p.salesCount * p.price).toFixed(2)}, Profit margin: ${(((p.price - p.cost) / p.price) * 100).toFixed(1)}%`)
+  .map((p: any) => `- ${p.name} (${p.category}): Sales count: ${p.salesCount} units, Current stock: ${p.stockAmount} units, Total value sold: ₹${(p.salesCount * p.price).toFixed(2)}, Profit margin: ${(((p.price - p.cost) / p.price) * 100).toFixed(1)}%`)
   .join("\n")}
 
 --- LOWEST SELLING PRODUCTS OR STOCK ISSUES ---
 ${products
   .sort((a: any, b: any) => a.salesCount - b.salesCount)
   .slice(0, 5)
-  .map((p: any) => `- ${p.name} (${p.category}): Sales count: ${p.salesCount} units, Current stock: ${p.stockAmount}, Total holding value in stock: $${(p.stockAmount * p.cost).toFixed(2)}, Profit margin: ${(((p.price - p.cost) / p.price) * 100).toFixed(1)}%`)
+  .map((p: any) => `- ${p.name} (${p.category}): Sales count: ${p.salesCount} units, Current stock: ${p.stockAmount}, Total holding value in stock: ₹${(p.stockAmount * p.cost).toFixed(2)}, Profit margin: ${(((p.price - p.cost) / p.price) * 100).toFixed(1)}%`)
   .join("\n")}
 `;
 
@@ -122,11 +122,11 @@ Provide high-quality retail consultation directly.
                   },
                   action: {
                     type: Type.STRING,
-                    description: "Concrete step details, such as 'Reorder 50 units immediately', 'Raise standard price by $2.00', or 'Bundle with slow-moving item'.",
+                    description: "Concrete step details, such as 'Reorder 50 units immediately', 'Raise standard price by ₹150', or 'Bundle with slow-moving item'.",
                   },
                   impact: {
                     type: Type.STRING,
-                    description: "Financial or inventory outcome expected, like 'Unlocks $450 in trapped capital' or 'Protects from stockout loss'.",
+                    description: "Financial or inventory outcome expected, like 'Unlocks ₹35,000 in trapped capital' or 'Protects from stockout loss'.",
                   },
                   priority: {
                     type: Type.STRING,

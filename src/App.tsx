@@ -2,8 +2,6 @@ import React, { useState, useEffect, useMemo } from "react";
 import { 
   Package, 
   Layers, 
-  Brain, 
-  RefreshCw, 
   Search, 
   Filter, 
   Plus, 
@@ -14,7 +12,6 @@ import {
   History,
   FileSpreadsheet,
   X,
-  Sparkles,
   HelpCircle,
   Undo2,
   DollarSign,
@@ -35,6 +32,8 @@ import {
 } from "./mockData";
 import KPICards from "./components/KPICards";
 import HourlySalesChart from "./components/HourlySalesChart";
+import PowerBIEmbed from "./components/PowerBIEmbed";
+import { StoreFrontierLogo } from "./components/Logo";
 
 export default function App() {
   // --- Persistent Storage State ---
@@ -85,16 +84,8 @@ export default function App() {
   const [newProdMin, setNewProdMin] = useState(10);
   const [prodError, setProdError] = useState("");
 
-  // AI Strategic Auditor State
-  const [aiReport, setAiReport] = useState<AIAnalysisReport | null>(() => {
-    const saved = localStorage.getItem("retail_dashboard_ai_report");
-    return saved ? JSON.parse(saved) : null;
-  });
-  const [isAiLoading, setIsAiLoading] = useState(false);
-  const [aiError, setAiError] = useState("");
-
-  // Tab State: "dashboard" | "inventory" | "ledger"
-  const [activeTab, setActiveTab] = useState<"dashboard" | "inventory" | "ledger">("dashboard");
+  // Tab State: "dashboard" | "inventory" | "ledger" | "powerbi"
+  const [activeTab, setActiveTab] = useState<"dashboard" | "inventory" | "ledger" | "powerbi">("dashboard");
 
   // Save states to local storage
   useEffect(() => {
@@ -104,12 +95,6 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("retail_dashboard_transactions", JSON.stringify(transactions));
   }, [transactions]);
-
-  useEffect(() => {
-    if (aiReport) {
-      localStorage.setItem("retail_dashboard_ai_report", JSON.stringify(aiReport));
-    }
-  }, [aiReport]);
 
   const selectedProductForSale = useMemo(() => {
     return products.find(p => p.id === saleProductId);
@@ -128,12 +113,13 @@ export default function App() {
   }, [isRecordSaleOpen, products]);
 
   // --- KPI and Calculation Logic ---
-  const kpis: KPIStats = useMemo(() => {
-    // Filter products list depending on selected department
-    const relevantProducts = products.filter(
+  const relevantProducts = useMemo(() => {
+    return products.filter(
       p => selectedDept === Department.ALL || p.category === selectedDept
     );
+  }, [products, selectedDept]);
 
+  const kpis: KPIStats = useMemo(() => {
     let revenue = 0;
     let cost = 0;
     let itemsInStockCount = 0;
@@ -169,7 +155,7 @@ export default function App() {
       lowStockCount,
       outOfStockCount
     };
-  }, [products, selectedDept]);
+  }, [relevantProducts]);
 
   // Fast-Moving Products: highest unit sales count
   const fastMovingProducts = useMemo(() => {
@@ -344,45 +330,12 @@ export default function App() {
     }));
   };
 
-  const triggerAiAnalysis = async () => {
-    setIsAiLoading(true);
-    setAiError("");
-    try {
-      const response = await fetch("/api/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          products: products.filter(
-            p => selectedDept === Department.ALL || p.category === selectedDept
-          ),
-          kpis,
-          department: selectedDept
-        })
-      });
-
-      if (!response.ok) {
-        const errData = await response.json().catch(() => ({}));
-        throw new Error(errData.error || "The AI model service encountered a problem. Ensure GEMINI_API_KEY is configured.");
-      }
-
-      const report: AIAnalysisReport = await response.json();
-      setAiReport(report);
-    } catch (err: any) {
-      console.error(err);
-      setAiError(err.message || "An unexpected error occurred during AI business analysis.");
-    } finally {
-      setIsAiLoading(false);
-    }
-  };
-
   const handleResetAppDefaults = () => {
     if (window.confirm("Restore dashboard to standard retail seed dataset? This wipes registered testing sales.")) {
       localStorage.removeItem("retail_dashboard_products");
       localStorage.removeItem("retail_dashboard_transactions");
-      localStorage.removeItem("retail_dashboard_ai_report");
       setProducts(INITIAL_PRODUCTS);
       setTransactions(INITIAL_TRANSACTIONS);
-      setAiReport(null);
       setSearchTerm("");
       setSelectedDept(Department.ALL);
     }
@@ -390,9 +343,9 @@ export default function App() {
 
   // Quick Currency Formatter
   const formatCur = (v: number) => {
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat("en-IN", {
       style: "currency",
-      currency: "USD"
+      currency: "INR"
     }).format(v);
   };
 
@@ -402,16 +355,12 @@ export default function App() {
       <header id="app-main-navigation-header" className="sticky top-0 bg-white border-b border-slate-100 z-20">
         <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-indigo-600 rounded-xl text-white shadow-md shadow-indigo-600/10">
-              <Package className="w-6 h-6" />
-            </div>
-            <div>
-              <h1 className="text-xl font-black text-slate-950 tracking-tight">Store Frontier</h1>
-              <p className="text-xs text-indigo-600/80 font-bold uppercase tracking-widest flex items-center gap-1">
-                <span>Retail Inventory & Revenue KPIs</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              </p>
-            </div>
+            <StoreFrontierLogo size={32} />
+            <div className="h-8 w-[1px] bg-slate-200 hidden md:block ml-2"></div>
+            <p className="text-[10px] text-indigo-600/80 font-bold uppercase tracking-widest hidden md:flex items-center gap-1">
+              <span>Retail Inventory & KPIs</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            </p>
           </div>
 
           {/* Quick Config Row */}
@@ -494,7 +443,7 @@ export default function App() {
                   <div className="text-right whitespace-nowrap px-1">
                     <span className="text-[10px] block text-slate-400 uppercase tracking-widest leading-none">Est Price</span>
                     <span className="text-base font-extrabold text-slate-900">
-                      {selectedProductForSale ? formatCur(selectedProductForSale.price * saleQuantity) : "$0.00"}
+                      {selectedProductForSale ? formatCur(selectedProductForSale.price * saleQuantity) : "₹0.00"}
                     </span>
                   </div>
                 </div>
@@ -588,7 +537,7 @@ export default function App() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-600 mb-1">Buying Cost ($)</label>
+                  <label className="block text-xs font-bold text-slate-600 mb-1">Buying Cost (₹)</label>
                   <input
                     type="number"
                     step="0.01"
@@ -600,7 +549,7 @@ export default function App() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-600 mb-1">Retail Price ($)</label>
+                  <label className="block text-xs font-bold text-slate-600 mb-1">Retail Price (₹)</label>
                   <input
                     type="number"
                     step="0.01"
@@ -722,22 +671,31 @@ export default function App() {
               <History className="w-4 h-4" />
               <span>Log Ledger</span>
             </button>
+            <button
+              onClick={() => setActiveTab("powerbi")}
+              className={`flex-1 md:flex-none py-2 px-4 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer ${
+                activeTab === "powerbi"
+                  ? "bg-amber-500 text-slate-950 font-black shadow-xs shadow-amber-500/10"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              <TrendingUp className="w-4 h-4" />
+              <span>Power BI Integration</span>
+            </button>
           </div>
         </div>
 
         {/* STATS OVERVIEW CARDS */}
         <KPICards 
           stats={kpis} 
+          products={relevantProducts}
           onCreateSaleClick={() => setIsRecordSaleOpen(true)}
           onRestockLowClick={handleRestockAllLowStock}
         />
 
         {/* INTERACTIVE PANEL TABS CONTENT */}
         {activeTab === "dashboard" && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
-            {/* INTRADAY PLOTS AND LEADERBOARDS */}
-            <div className="lg:col-span-2 space-y-8">
+          <div className="space-y-8">
               {/* Hourly Live Tracker */}
               <HourlySalesChart data={HOURLY_SALES_CURVE} />
 
@@ -822,145 +780,7 @@ export default function App() {
 
               </div>
             </div>
-
-            {/* AI STRATEGIC CONSULTANT ADVISOR */}
-            <div className="bg-slate-900 text-slate-100 rounded-3xl p-6 shadow-md border border-slate-800 flex flex-col justify-between">
-              <div>
-                <div className="flex justify-between items-center mb-6">
-                  <div className="flex items-center gap-2">
-                    <div className="p-2.5 bg-indigo-600 rounded-xl text-white">
-                      <Brain className="w-5 h-5 animate-pulse" />
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-black tracking-tight text-white flex items-center gap-1.5">
-                        <span>AI Store Auditor</span>
-                        <span className="text-[10px] bg-indigo-500/30 text-indigo-300 font-extrabold py-0.5 px-2 rounded-full">Gemini</span>
-                      </h4>
-                      <p className="text-[10px] text-slate-400">Retail & inventory turnover consultant</p>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={triggerAiAnalysis}
-                    disabled={isAiLoading}
-                    className="p-2 bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 active:scale-95 disabled:opacity-50 rounded-lg transition-all cursor-pointer"
-                    title="Audit Live Inventory & Margins"
-                  >
-                    <RefreshCw className={`w-4 h-4 ${isAiLoading ? "animate-spin" : ""}`} />
-                  </button>
-                </div>
-
-                {/* Main AI response content */}
-                {isAiLoading ? (
-                  <div className="py-12 flex flex-col items-center justify-center gap-3">
-                    <div className="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
-                    <p className="text-xs text-slate-300 font-bold tracking-wider animate-pulse uppercase">Auditing Retail System...</p>
-                    <span className="text-[10px] text-slate-500 text-center max-w-[200px]">Evaluating product velocity, margin leakages, and stockout threats.</span>
-                  </div>
-                ) : aiError ? (
-                  <div className="p-4 bg-amber-950/40 text-amber-300 border border-amber-900/60 rounded-2xl text-xs space-y-2">
-                    <div className="flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
-                      <span className="font-bold">Consultant Temporary Unavailable</span>
-                    </div>
-                    <p className="text-[11px] text-amber-300/80 leading-relaxed font-semibold">
-                      Configure your <code className="bg-slate-950 text-slate-200 p-0.5 px-1 rounded-sm">GEMINI_API_KEY</code> within Settings &gt; Secrets to unleash active strategic audits.
-                    </p>
-                  </div>
-                ) : aiReport ? (
-                  <div className="space-y-5">
-                    {/* Score Segment */}
-                    <div className="flex items-center gap-4 bg-slate-850 p-4 rounded-2xl border border-slate-800">
-                      <div className="relative flex items-center justify-center">
-                        <svg className="w-16 h-16 transform -rotate-90">
-                          <circle cx="32" cy="32" r="26" fill="transparent" stroke="#1e293b" strokeWidth="4" />
-                          <circle 
-                            cx="32" cy="32" r="26" fill="transparent" 
-                            stroke={aiReport.healthScore >= 80 ? "#10b981" : aiReport.healthScore >= 50 ? "#f59e0b" : "#ef4444"} 
-                            strokeWidth="4.5" 
-                            strokeDasharray={`${2 * Math.PI * 26}`}
-                            strokeDashoffset={`${2 * Math.PI * 26 * (1 - aiReport.healthScore / 100)}`}
-                            strokeLinecap="round"
-                          />
-                        </svg>
-                        <span className="absolute text-base font-black text-white">{aiReport.healthScore}</span>
-                      </div>
-                      <div>
-                        <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block">Store Health Score</span>
-                        <p className="text-xs text-slate-300 font-medium">calculated based on pricing margins & stockout buffer rates</p>
-                      </div>
-                    </div>
-
-                    {/* Summary text */}
-                    <p className="text-xs text-slate-300 leading-relaxed italic border-l-2 border-indigo-500 pl-3">
-                      "{aiReport.summary}"
-                    </p>
-
-                    {/* Warning Points */}
-                    {aiReport.criticalWarnings?.length > 0 && (
-                      <div>
-                        <span className="text-[10px] uppercase tracking-widest text-[#ef4444] font-bold block mb-2">Critical Leaks & stock risks</span>
-                        <ul className="space-y-1.5 text-xs text-slate-300 leading-relaxed pl-1">
-                          {aiReport.criticalWarnings.slice(0, 3).map((w, idx) => (
-                            <li key={idx} className="flex items-start gap-2">
-                              <span className="text-[10px] text-red-500 mt-1">●</span>
-                              <span>{w}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {/* Action Recommended Items list */}
-                    <div>
-                      <span className="text-[10px] uppercase tracking-widest text-[#10b981] font-bold block mb-2">Prescribed Strategy Actions</span>
-                      <div className="space-y-2.5">
-                        {aiReport.actionItems?.slice(0, 3).map((action, idx) => (
-                          <div 
-                            key={idx}
-                            className="bg-slate-800/80 border border-slate-700/50 p-2.5 rounded-xl text-xs space-y-1"
-                          >
-                            <div className="flex justify-between items-center">
-                              <span className="font-bold text-white tracking-tight">{action.target}</span>
-                              <span className={`text-[9px] font-bold py-0.5 px-2 rounded-full ${
-                                action.priority === "High" ? "bg-red-500/20 text-red-300" : "bg-cyan-500/20 text-cyan-200"
-                              }`}>{action.priority} priority</span>
-                            </div>
-                            <p className="text-slate-300 text-[11px]"><strong className="text-indigo-300 font-semibold">{action.type}:</strong> {action.action}</p>
-                            <span className="text-[10px] block text-slate-400 italic">Expected Impact: {action.impact}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="py-12 border-2 border-dashed border-slate-800 rounded-2xl flex flex-col items-center justify-center text-center px-4">
-                    <Sparkles className="w-8 h-8 text-indigo-500 mb-2 animate-bounce" />
-                    <h5 className="text-sm font-bold text-white">Generate Auditor Business Audit</h5>
-                    <p className="text-[11px] text-slate-400 max-w-[200px] mt-1 mb-4 leading-relaxed">
-                      Evaluate active turnover levels, gross profits list, and margin efficiency globally.
-                    </p>
-                    <button
-                      onClick={triggerAiAnalysis}
-                      disabled={isAiLoading}
-                      className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-2 px-3 rounded-lg transition-all flex items-center gap-1 cursor-pointer"
-                    >
-                      <Brain className="w-3.5 h-3.5" />
-                      <span>Audit Stock Health</span>
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Disclaimer footer */}
-              <div className="pt-4 border-t border-slate-800 mt-6 flex items-center justify-between text-[10px] text-slate-500">
-                <span>Auditor context: {selectedDept}</span>
-                <span>Active stock count: {products.length}</span>
-              </div>
-            </div>
-
-          </div>
-        )}
+          )}
 
         {activeTab === "inventory" && (
           <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex flex-col">
@@ -1157,13 +977,18 @@ export default function App() {
           </div>
         )}
 
+        {activeTab === "powerbi" && (
+          <PowerBIEmbed products={products} transactions={transactions} />
+        )}
+
       </main>
 
       {/* FOOTER BAR */}
       <footer className="mt-auto bg-slate-900 text-slate-400 py-6 border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-          <div>
-            <span className="font-bold text-slate-100">Store Frontier KPI Dashboard</span> — Store manager strategy toolkit
+          <div className="flex items-center gap-2">
+            <StoreFrontierLogo size={22} showTagline={false} />
+            <span className="text-slate-400 text-xs">— KPI Dashboard Strategy Toolkit</span>
           </div>
           <div className="flex gap-4">
             <span className="font-mono text-slate-500">v1.1.0 (TypeScript + Express)</span>

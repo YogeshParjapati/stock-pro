@@ -1,7 +1,7 @@
 import React from "react";
 import { 
   TrendingUp, 
-  DollarSign, 
+  IndianRupee, 
   Percent, 
   Package, 
   AlertCircle, 
@@ -9,21 +9,22 @@ import {
   ShieldCheck,
   Plus
 } from "lucide-react";
-import { KPIStats } from "../types";
+import { KPIStats, Product } from "../types";
 
 interface KPICardsProps {
   stats: KPIStats;
+  products: Product[];
   onCreateSaleClick: () => void;
   onRestockLowClick: () => void;
 }
 
 export default function KPICards(props: KPICardsProps) {
-  const { stats, onCreateSaleClick, onRestockLowClick } = props;
+  const { stats, products, onCreateSaleClick, onRestockLowClick } = props;
 
   const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat("en-IN", {
       style: "currency",
-      currency: "USD",
+      currency: "INR",
     }).format(val);
   };
 
@@ -36,7 +37,7 @@ export default function KPICards(props: KPICardsProps) {
       >
         <div className="flex justify-between items-start mb-4">
           <div className="p-3 bg-emerald-50 rounded-xl text-emerald-600 group-hover:bg-emerald-100 transition-colors duration-200 animate-pulse">
-            <DollarSign className="w-6 h-6" />
+            <IndianRupee className="w-6 h-6" />
           </div>
           <button
             id="register-sale-quick-btn"
@@ -167,6 +168,29 @@ export default function KPICards(props: KPICardsProps) {
             </>
           )}
         </div>
+
+        {products && products.filter(p => p.stockAmount <= p.stockMinThreshold).length > 0 && (
+          <div className="mt-4 pt-4 border-t border-slate-100 max-h-48 overflow-y-auto space-y-2 pr-1 scrollbar-thin">
+            <span className="text-[10px] font-bold text-amber-800 uppercase tracking-wider block mb-1">Items below threshold:</span>
+            {products
+              .filter(p => p.stockAmount <= p.stockMinThreshold)
+              .map(p => (
+                <div key={p.id} className="flex justify-between items-center text-xs bg-amber-50/50 p-2 rounded-lg border border-amber-100/30">
+                  <div className="truncate pr-2">
+                    <p className="font-bold text-amber-950 truncate">{p.name}</p>
+                    <p className="text-[10px] text-slate-500 font-medium">SKU: {p.sku} • {p.category}</p>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <span className={`font-mono font-bold px-1.5 py-0.5 rounded text-[10px] ${
+                      p.stockAmount === 0 ? "bg-red-100 text-red-800" : "bg-amber-100 text-amber-900"
+                    }`}>
+                      {p.stockAmount} / {p.stockMinThreshold}
+                    </span>
+                  </div>
+                </div>
+              ))}
+          </div>
+        )}
       </div>
     </div>
   );
