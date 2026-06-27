@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { motion } from "motion/react";
 import { 
   Package, 
   Layers, 
@@ -615,72 +616,120 @@ export default function App() {
         {/* CONTROL DEPT STRIP & TABS */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
           {/* Department Filter Segments with dynamic icons */}
-          <div className="flex items-center gap-1 bg-white p-1 rounded-2xl border border-slate-100 overflow-x-auto w-full md:w-auto scrollbar-none shadow-xs">
-            {Object.values(Department).map(dept => (
-              <button
-                key={dept}
-                onClick={() => setSelectedDept(dept)}
-                className={`py-2 px-4 rounded-xl text-xs font-bold whitespace-nowrap transition-all duration-200 flex items-center gap-1.5 cursor-pointer ${
-                  selectedDept === dept 
-                    ? "bg-slate-900 text-white shadow-sm" 
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                }`}
-              >
-                {dept === Department.ALL && <Layers className="w-3.5 h-3.5" />}
-                {dept === Department.APPAREL && <ShoppingBag className="w-3.5 h-3.5" />}
-                {dept === Department.ELECTRONICS && <Activity className="w-3.5 h-3.5" />}
-                {dept === Department.HOME && <Package className="w-3.5 h-3.5" />}
-                {dept === Department.GROCERIES && <FileSpreadsheet className="w-3.5 h-3.5" />}
-                <span>{dept}</span>
-              </button>
-            ))}
+          <div className="flex items-center gap-1 bg-slate-950/[0.03] backdrop-blur-md p-1 rounded-2xl border border-slate-950/[0.04] overflow-x-auto w-full md:w-auto scrollbar-none shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)]">
+            {Object.values(Department).map(dept => {
+              const isActive = selectedDept === dept;
+              return (
+                <button
+                  key={dept}
+                  onClick={() => setSelectedDept(dept)}
+                  className={`relative py-2 px-4 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 cursor-pointer select-none transition-colors duration-200 ${
+                    isActive 
+                      ? "text-white" 
+                      : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeDeptBubble"
+                      className="absolute inset-0 rounded-xl bg-slate-900 shadow-[0_10px_22px_-4px_rgba(139,92,246,0.32),0_4px_12px_rgba(15,23,42,0.14),inset_0_1px_1.5px_rgba(255,255,255,0.3)] border border-white/12 backdrop-blur-sm z-0"
+                      transition={{ type: "spring", stiffness: 320, damping: 25 }}
+                    />
+                  )}
+                  <span className="relative z-10 flex items-center gap-1.5">
+                    {dept === Department.ALL && <Layers className="w-3.5 h-3.5" />}
+                    {dept === Department.APPAREL && <ShoppingBag className="w-3.5 h-3.5" />}
+                    {dept === Department.ELECTRONICS && <Activity className="w-3.5 h-3.5" />}
+                    {dept === Department.HOME && <Package className="w-3.5 h-3.5" />}
+                    {dept === Department.GROCERIES && <FileSpreadsheet className="w-3.5 h-3.5" />}
+                    <span>{dept}</span>
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
           {/* Tab Navigation selectors */}
-          <div className="flex items-center gap-1.5 bg-slate-200/60 p-1 rounded-2xl w-full md:w-auto">
+          <div className="flex items-center gap-1 bg-slate-950/[0.03] backdrop-blur-md p-1 rounded-2xl border border-slate-950/[0.04] w-full md:w-auto shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)]">
             <button
               onClick={() => setActiveTab("dashboard")}
-              className={`flex-1 md:flex-none py-2 px-4 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer ${
+              className={`relative flex-1 md:flex-none py-2 px-4 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer select-none ${
                 activeTab === "dashboard"
-                  ? "bg-white text-slate-900 shadow-xs"
+                  ? "text-white"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
-              <Activity className="w-4 h-4" />
-              <span>KPI Summary</span>
+              {activeTab === "dashboard" && (
+                <motion.div
+                  layoutId="activeTabBubble"
+                  className="absolute inset-0 rounded-xl bg-slate-900 shadow-[0_10px_22px_-4px_rgba(139,92,246,0.32),0_4px_12px_rgba(15,23,42,0.14),inset_0_1px_1.5px_rgba(255,255,255,0.3)] border border-white/12 backdrop-blur-sm z-0"
+                  transition={{ type: "spring", stiffness: 320, damping: 25 }}
+                />
+              )}
+              <span className="relative z-10 flex items-center justify-center gap-1.5">
+                <Activity className="w-4 h-4" />
+                <span>KPI Summary</span>
+              </span>
             </button>
             <button
               onClick={() => setActiveTab("inventory")}
-              className={`flex-1 md:flex-none py-2 px-4 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer ${
+              className={`relative flex-1 md:flex-none py-2 px-4 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer select-none ${
                 activeTab === "inventory"
-                  ? "bg-white text-slate-900 shadow-xs"
+                  ? "text-white"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
-              <Package className="w-4 h-4" />
-              <span>Inventory ({filteredProducts.length})</span>
+              {activeTab === "inventory" && (
+                <motion.div
+                  layoutId="activeTabBubble"
+                  className="absolute inset-0 rounded-xl bg-slate-900 shadow-[0_10px_22px_-4px_rgba(139,92,246,0.32),0_4px_12px_rgba(15,23,42,0.14),inset_0_1px_1.5px_rgba(255,255,255,0.3)] border border-white/12 backdrop-blur-sm z-0"
+                  transition={{ type: "spring", stiffness: 320, damping: 25 }}
+                />
+              )}
+              <span className="relative z-10 flex items-center justify-center gap-1.5">
+                <Package className="w-4 h-4" />
+                <span>Inventory ({filteredProducts.length})</span>
+              </span>
             </button>
             <button
               onClick={() => setActiveTab("ledger")}
-              className={`flex-1 md:flex-none py-2 px-4 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer ${
+              className={`relative flex-1 md:flex-none py-2 px-4 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer select-none ${
                 activeTab === "ledger"
-                  ? "bg-white text-slate-900 shadow-xs"
+                  ? "text-white"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
-              <History className="w-4 h-4" />
-              <span>Log Ledger</span>
+              {activeTab === "ledger" && (
+                <motion.div
+                  layoutId="activeTabBubble"
+                  className="absolute inset-0 rounded-xl bg-slate-900 shadow-[0_10px_22px_-4px_rgba(139,92,246,0.32),0_4px_12px_rgba(15,23,42,0.14),inset_0_1px_1.5px_rgba(255,255,255,0.3)] border border-white/12 backdrop-blur-sm z-0"
+                  transition={{ type: "spring", stiffness: 320, damping: 25 }}
+                />
+              )}
+              <span className="relative z-10 flex items-center justify-center gap-1.5">
+                <History className="w-4 h-4" />
+                <span>Log Ledger</span>
+              </span>
             </button>
             <button
               onClick={() => setActiveTab("powerbi")}
-              className={`flex-1 md:flex-none py-2 px-4 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer ${
+              className={`relative flex-1 md:flex-none py-2 px-4 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer select-none ${
                 activeTab === "powerbi"
-                  ? "bg-amber-500 text-slate-950 font-black shadow-xs shadow-amber-500/10"
+                  ? "text-amber-950 font-extrabold"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
-              <TrendingUp className="w-4 h-4" />
-              <span>Power BI Integration</span>
+              {activeTab === "powerbi" && (
+                <motion.div
+                  layoutId="activeTabBubble"
+                  className="absolute inset-0 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 shadow-[0_10px_22px_-4px_rgba(245,158,11,0.4),inset_0_1px_1.5px_rgba(255,255,255,0.5)] border border-white/20 backdrop-blur-sm z-0"
+                  transition={{ type: "spring", stiffness: 320, damping: 25 }}
+                />
+              )}
+              <span className="relative z-10 flex items-center justify-center gap-1.5">
+                <TrendingUp className="w-4 h-4" />
+                <span>Power BI Integration</span>
+              </span>
             </button>
           </div>
         </div>
